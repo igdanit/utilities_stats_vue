@@ -1,12 +1,13 @@
 <script setup>
 import Intro from './components/Intro.vue'
-import SignUp from './components/SignUp.vue'
+import SignInUpVue from './components/sign-in-up/SignInUp.vue';
 </script>
 
 <template>
     <Intro />
-    <SignUp />
+    <SignInUpVue />
 </template>
 
 <style>
+    @import "normalize.css"
 </style>
