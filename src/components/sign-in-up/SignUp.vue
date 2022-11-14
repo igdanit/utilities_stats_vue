@@ -1,17 +1,43 @@
 <script setup>
     import { ref } from 'vue'
+    import axios from 'axios'
 
+    // Sign-up form data
     const password = ref('');
     const repeatedPassword = ref('');
     const email = ref('');
     const username = ref('');
 
-    // data correctness check
+    // Fields password and repeatedPassword validation
+    function isSame(pass, repeatedPass) {
+        return pass === repeatedPass
+    }
+
+    // Submit button handler. It should make request to API
     function onSubmit(event) {
-        if (password !== repeatedPassword) {
-            event.preventDefault()
+
+        // Blocking default action when press the button
+        event.preventDefault()
+
+        // Checking user credentials
+        if (!isSame(password, repeatedPassword)) {
             alert('Not implemented')
         }
+
+        // Sending request to API
+        axios.post('api/user/sign-up', {
+                email,
+                password,
+                username
+            })
+            .then(function(response) {
+                //Some action with response
+                console.log(response);
+            })
+            .catch(function(error) {
+                //Some action with error
+                throw error
+            })
     }
 
 </script>
