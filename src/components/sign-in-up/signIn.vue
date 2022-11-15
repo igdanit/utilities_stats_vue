@@ -13,7 +13,7 @@
         event.preventDefault()
 
         //Sending request to API
-        axios.post('api/user/sing-in', {
+        axios.post('api/auth/sing-in', {
             email,
             password
         })

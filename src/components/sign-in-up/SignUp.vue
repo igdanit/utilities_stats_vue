@@ -25,7 +25,7 @@
         }
 
         // Sending request to API
-        axios.post('api/user/sign-up', {
+        axios.post('api/auth/sign-up', {
                 email,
                 password,
                 username
