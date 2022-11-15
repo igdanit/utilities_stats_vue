@@ -16,9 +16,6 @@
     // Submit button handler. It should make request to API
     function onSubmit(event) {
 
-        // Blocking default action when press the button
-        event.preventDefault()
-
         // Checking user credentials
         if (!isSame(password, repeatedPassword)) {
             alert('Not implemented')
@@ -44,7 +41,7 @@
 
 <template>
     <div class=sign-up>
-        <form @submit="onSubmit">
+        <form @submit.prevent="onSubmit">
             <input class="input" v-model="username" name="username" type="text" placeholder="Введите имя пользователя">
             <input class="input" v-model="email" name="email" type="email" placeholder="Введите email">
             <input class="input" v-model="password" name="password" type="password" placeholder="Введите пароль">
