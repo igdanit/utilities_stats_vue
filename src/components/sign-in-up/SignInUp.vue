@@ -43,11 +43,6 @@
         display: none;
     } 
 
-    input {
-        box-sizing: border-box;
-        width: 95%;
-    }
-
     .sign-in-up form {
         display: flex;
         align-items: center;

@@ -1,6 +1,8 @@
 <script setup>
     import { ref } from 'vue'
     import axios from 'axios'
+    import FieldInput from '../UI/FieldInput.vue';
+    import SubmitButton from '../UI/SubmitButton.vue';
 
     // Sign-up form data
     const password = ref('');
@@ -42,17 +44,14 @@
 <template>
     <div class=sign-up>
         <form @submit.prevent="onSubmit">
-            <input class="input" v-model="username" name="username" type="text" placeholder="Введите имя пользователя">
-            <input class="input" v-model="email" name="email" type="email" placeholder="Введите email">
-            <input class="input" v-model="password" name="password" type="password" placeholder="Введите пароль">
-            <input class="input" v-model="repeatedPassword" name="repeated-password" type="password" placeholder="Повторно введите пароль ">
-            <button type="submit">Зарегестрироваться</button>
+            <FieldInput v-model="username" name="username" type="text" placeholder="Введите имя пользователя" />
+            <FieldInput v-model="email" name="email" type="email" placeholder="Введите email" /> 
+            <FieldInput v-model="password" name="password" type="password" placeholder="Введите пароль" />
+            <FieldInput v-model="repeatedPassword" name="repeated-password" type="password" placeholder="Повторно введите пароль " />
+            <SubmitButton type="submit">Зарегестрироваться</SubmitButton>
         </form>
     </div>
 </template>
 
 <style>
-    .input {
-        margin: 10px;
-    }
 </style>

@@ -9,5 +9,4 @@ import SignInUpVue from './components/sign-in-up/SignInUp.vue';
 </template>
 
 <style>
-    @import "normalize.css"
 </style>

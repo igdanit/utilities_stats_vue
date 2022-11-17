@@ -1,6 +1,8 @@
 <script setup>
-   import { ref } from 'vue'
-   import axios from 'axios'
+    import { ref } from 'vue'
+    import axios from 'axios'
+    import FieldInput from '../UI/FieldInput.vue';
+    import SubmitButton from '../UI/SubmitButton.vue';
 
    // Sign-in form data
     const password = ref('');
@@ -29,9 +31,9 @@
 <template>
     <div class="sign-in">
         <form @submit.prevent="onSubmit">
-            <input class="input" v-model="email" name="email" type="email" placeholder="Введите email">
-            <input class="input" v-model="password" name="password" type="password" placeholder="Введите пароль">
-            <button @submit="onSubmit" type="submit">Войти</button>
+            <FieldInput v-model="email" name="email" type="email" placeholder="Введите email" />
+            <FieldInput v-model="password" name="password" type="password" placeholder="Введите пароль" />
+            <SubmitButton @submit="onSubmit" type="submit">Войти</SubmitButton>
         </form>
     </div>
 </template>
