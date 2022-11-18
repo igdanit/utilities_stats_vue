@@ -4,6 +4,8 @@
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
 
+    axios.defaults.headers.post['Content-Type']='application/json';
+
    // Sign-in form data
     const password = ref('');
     const email = ref('');
@@ -11,8 +13,8 @@
     // Submit button handler
     function onSubmit(event) {
 
-        //Sending request to API
-        axios.post('api/auth/sing-in', {
+        // Sending request to API
+        axios.post('api/auth/sign-in', {
             email,
             password
         })
