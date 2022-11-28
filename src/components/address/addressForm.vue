@@ -3,26 +3,28 @@
     import axios from 'axios';
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
+    import { reactiveToPlain } from '../../helper';
 
     const address = ref('');
 
     const props = defineProps(['userId'])
 
-    const userId = props.userId;
-    const access_token = window.localStorage.getItem('access_token');
+    // const userId = props.userId;
+    // const access_token = window.localStorage.getItem('access_token');
+
+    const axiosInstance = axios.create()
+
 
     // Send request to API 
     async function onSubmit(event) {
-        await axios.post(`api/address/${userId}`, {
-            newAddress: address,
-            access_token,
-        })
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${window.localStorage['access_token']}`
+        await axiosInstance.post(`api/address`, reactiveToPlain({address}))
     }
 
 </script>
 
 <template>
-    <div class="add-address">
+    <div class="content add-address">
         <form class="address-form" @submit.prevent="onSubmit">
             <FieldInput v-model="address" name="address" type="text" placeholder="Введите Адрес" />
             <SubmitButton>Добавить адрес</SubmitButton>
@@ -31,4 +33,8 @@
 </template>
 
 <style>
+.address-form {
+    display:flex;
+    white-space: nowrap;
+}
 </style>

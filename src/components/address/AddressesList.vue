@@ -1,28 +1,42 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
-    import axios from 'axios';
+    import { reactive, ref } from 'vue';
+    import { attachJWTtoAxios, extractUserIDfromJWT } from '../../helper';
+    import SelectOption from '../UI/SelectOption.vue';
+    import { Address } from '../../types'
 
-    const props = defineProps(['userId'])
+    const addressID = ref();
+    const selectOptions = reactive([]);
 
-    const userId = props.userId
+    function createAddresses(addresses, reactiveArr) {
 
-    let addresses;
+        return addresses.forEach(
+            address => {reactiveArr.push(new Address(address.address,address.id))}
+        )
+    }
 
-    async function fetchAddresses(userId) {
-        const response = await axios.get(`/api/addresses/${userId}`);
-        addresses = response.data.addresses;
+    async function fetchAddresses() {
+        const axios = attachJWTtoAxios('access_token');
+        const userID = extractUserIDfromJWT(); 
+        const response = await axios.get(`api/address/${userID}`);
+        return response.data;
+    }
+
+    async function onClick(event) {
+        const addresses = await fetchAddresses();
+        createAddresses(Object.values(addresses), selectOptions);
     }
 
 </script>
 
 <template>
-    <div class="addresses-list dropdown">
+    <div class="content addresses-list dropdown">
+        <form>
+            <button @click.prevent="onClick">
+                Получить адресса
+            </button>
+        </form>
         <label for="addresses">Выберите адрес</label>
-        <select id="addresses">
-            <options v-for="address in addresses" :value="address.id">
-                {{address.address}}
-            </options>
-        </select>
+        <SelectOption v-model="addressID" id="addresses" :select-options="selectOptions" select-name="selectedAddress" select-hint="Выберите адрес"/>
     </div>
 </template>
 
