@@ -25,10 +25,10 @@
 </script>
 
 <template>
-    <div class="sign-in-up">
+    <div class="content sign-in-up">
         <div @click="isHidden" class="sign-in-up--header">
             <div class="sign-in-option"><p>Войти</p></div>
-            <div class="sign-up-option"><p>Зарегестрироваться</p></div>
+            <div class="sign-up-option"><p>Зарегистрироваться</p></div>
         </div>
         <div class="sign-in-up--content">
             <SignIn :class="{hidden: hiddenStatuses.signIn}" />
@@ -49,7 +49,7 @@
         flex-direction: column;
     }
 
-    .sign-in-up {
+    .content {
         margin: auto;
         border: solid;
         padding: 15px;

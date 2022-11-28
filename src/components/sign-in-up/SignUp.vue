@@ -3,6 +3,7 @@
     import axios from 'axios'
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
+    import { getHash, reactiveToPlain } from '../../helper';
 
     // Sign-up form data
     const password = ref('');
@@ -19,19 +20,18 @@
     function onSubmit(event) {
 
         // Checking user credentials
-        if (!isSame(password, repeatedPassword)) {
-            alert('Not implemented')
+        if (!isSame(password.value, repeatedPassword.value)) {
+            alert('Not implemented. Password must be the same')
         }
 
         // Sending request to API
-        axios.post('api/auth/sign-up', {
+        axios.post('api/auth/sign-up', reactiveToPlain({
                 email,
-                password,
+                passwordHash: getHash(password),
                 username
-            })
+            }))
             .then(function(response) {
                 //Some action with response
-                console.log(response);
             })
             .catch(function(error) {
                 //Some action with error
@@ -48,7 +48,7 @@
             <FieldInput v-model="email" name="email" type="email" placeholder="Введите email" /> 
             <FieldInput v-model="password" name="password" type="password" placeholder="Введите пароль" />
             <FieldInput v-model="repeatedPassword" name="repeated-password" type="password" placeholder="Повторно введите пароль " />
-            <SubmitButton type="submit">Зарегестрироваться</SubmitButton>
+            <SubmitButton type="submit">Зарегистрироваться</SubmitButton>
         </form>
     </div>
 </template>

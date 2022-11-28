@@ -3,8 +3,7 @@
     import axios from 'axios'
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
-
-    axios.defaults.headers.post['Content-Type']='application/json';
+    import { getHash, reactiveToPlain } from '../../helper';
 
    // Sign-in form data
     const password = ref('');
@@ -14,14 +13,14 @@
     function onSubmit(event) {
 
         // Sending request to API
-        axios.post('api/auth/sign-in', {
-            email,
-            password
-        })
+        axios.post(
+            'api/auth/sign-in',
+            reactiveToPlain({
+                email, 
+                passwordHash: getHash(password)})
+        )
         .then(function(response){
             window.localStorage.setItem('access_token',response.data.access_token)
-            // Some action with response
-            console.log(response)
         })
         .catch(function(error) {
             // Some action with error
