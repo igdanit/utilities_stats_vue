@@ -1,13 +1,19 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, inject } from 'vue'
     import axios from 'axios'
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
     import { getHash, reactiveToPlain } from '../../helper';
+    import { jwtHelper } from '../../helpers';
+
+    const { extractUserIDfromJWT } = jwtHelper;
 
    // Sign-in form data
     const password = ref('');
     const email = ref('');
+
+    // Inject props
+    const userID = inject('userID');
 
     // Submit button handler
     function onSubmit(event) {
@@ -20,7 +26,9 @@
                 passwordHash: getHash(password)})
         )
         .then(function(response){
-            window.localStorage.setItem('access_token',response.data.access_token)
+            window.localStorage.setItem('access_token',response.data.access_token);
+            userID.value = extractUserIDfromJWT();
+
         })
         .catch(function(error) {
             // Some action with error

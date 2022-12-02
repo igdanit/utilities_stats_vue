@@ -1,8 +1,10 @@
 <script setup>
     import { reactive, ref } from 'vue';
-    import { attachJWTtoAxios, extractUserIDfromJWT } from '../../helper';
+    import { jwtHelper } from '../../helpers';
     import SelectOption from '../UI/SelectOption.vue';
     import { Address } from '../../types'
+
+    const {attachJWTtoAxios, extractUserIDfromJWT} = jwtHelper;
 
     const addressID = ref();
     const selectOptions = reactive([]);

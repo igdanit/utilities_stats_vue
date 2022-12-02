@@ -1,9 +1,12 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, inject } from 'vue'
     import axios from 'axios'
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
     import { getHash, reactiveToPlain } from '../../helper';
+
+    //Inject
+    const userID = inject('userID');
 
     // Sign-up form data
     const password = ref('');

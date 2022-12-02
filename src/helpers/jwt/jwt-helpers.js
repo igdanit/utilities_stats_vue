@@ -13,6 +13,15 @@ export function updateJWT(func = ()=>{}) {
 }
 
 export async function isJWTvalid() {
-    const axios = attachJWTtoAxios(CONSTANTS.ACCESS_TOKEN_NAME);
-    const response = await axios.get('api/auth/update-jwt')
+    try {
+        const axios = attachJWTtoAxios(CONSTANTS.ACCESS_TOKEN_NAME);
+        await axios.get('api/auth/update-jwt')
+    } catch (error) {
+        if (error.response.status == 401) {
+            return false
+        }
+        throw error;
+    }
+
+    return true;
 }

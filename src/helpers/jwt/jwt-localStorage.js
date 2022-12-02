@@ -1,5 +1,5 @@
 import axios from 'axios';
-import CONSTANTS from '../constants';
+import CONSTANTS from '../../constants';
 
 export function attachJWTtoAxios(JWTkey) {
     const axiosInstance = axios.create()
@@ -34,5 +34,5 @@ function saveJWTtoLocalStorage(alias, jwt) {
 }
 
 export function saveJWTasACCESS_TOKEN(jwt) {
-    saveJWTtoLocalStorage(CONSTANTS.ACCESS_TOKEN_NAME, 'jwt')
+    saveJWTtoLocalStorage(CONSTANTS.ACCESS_TOKEN_NAME, jwt)
 }
