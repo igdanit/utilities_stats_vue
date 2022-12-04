@@ -1,7 +1,7 @@
 import axios from 'axios';
 import CONSTANTS from '../../constants';
 
-export function attachJWTtoAxios(JWTkey) {
+export function attachJWTtoAxios(JWTkey = CONSTANTS.ACCESS_TOKEN_NAME) {
     const axiosInstance = axios.create()
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${window.localStorage[JWTkey]}`
 

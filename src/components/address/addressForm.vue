@@ -9,14 +9,17 @@
 
     const props = defineProps(['userId'])
 
-    // const userId = props.userId;
-    // const access_token = window.localStorage.getItem('access_token');
-
     const axiosInstance = axios.create()
 
+    // Audit address ref
+    function isValidAddress(address) {
+        address.value = address.value.trim();
+        return address.value
+    }
 
     // Send request to API 
     async function onSubmit(event) {
+        if (!isValidAddress(address)) return;
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${window.localStorage['access_token']}`
         await axiosInstance.post(`api/address`, reactiveToPlain({address}))
     }
@@ -24,9 +27,9 @@
 </script>
 
 <template>
-    <div class="content add-address">
+    <div class="add-address">
         <form class="address-form" @submit.prevent="onSubmit">
-            <FieldInput v-model="address" name="address" type="text" placeholder="Введите Адрес" />
+            <FieldInput v-model="address" name="address" type="text" placeholder="Введите адрес, чтобы добавить его" />
             <SubmitButton>Добавить адрес</SubmitButton>
         </form>
     </div>

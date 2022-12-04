@@ -28,4 +28,7 @@ defineEmits(['update:modelValue'])
 </template>
 
 <style>
+    select option {
+        background-color: var(--clr-bg);
+    }
 </style>

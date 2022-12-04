@@ -25,7 +25,7 @@
 </script>
 
 <template>
-    <div class="content sign-in-up">
+    <div class="sign-in-up">
         <div @click="isHidden" class="sign-in-up--header">
             <div class="sign-in-option"><p>Войти</p></div>
             <div class="sign-up-option"><p>Зарегистрироваться</p></div>
@@ -49,18 +49,25 @@
         flex-direction: column;
     }
 
-    .content {
-        margin: auto;
-        border: solid;
-        padding: 15px;
-        width: 90%;
+    .sign-in-up--header {
+        display: flex;
     }
 
-    .sign-in-up--header *{
-        display: inline-block;
-        width: 50%;
+
+    .sign-in-up--header > div{
+        flex: 1;
         margin: auto;
         text-align: center;
+        border: var(--clr-border) solid;
+        border-width: 0 0.125em 0.25em 0.125em;
+    }
+
+    .sign-in-up--header > div:first-child {
+        border-width: 0 0.125em 0.25em 0;
+    }
+    
+    .sign-in-up--header > div:last-child {
+        border-width: 0 0 0.25em 0.125em;
     }
 
 </style>
