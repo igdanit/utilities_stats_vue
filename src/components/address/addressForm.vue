@@ -21,7 +21,9 @@
     async function onSubmit(event) {
         if (!isValidAddress(address)) return;
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${window.localStorage['access_token']}`
-        await axiosInstance.post(`api/address`, reactiveToPlain({address}))
+        await axiosInstance.post(`api/address`, reactiveToPlain({address}));
+
+        address.value = '';
     }
 
 </script>

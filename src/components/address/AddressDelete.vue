@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue';
+    import { ref, inject } from 'vue';
     import { updateJWT } from '../../helpers';
     import { attachJWTtoAxios } from '../../helpers/jwt';
     import SubmitButton from '../UI/SubmitButton.vue';
@@ -7,6 +7,10 @@
 
     const addressID = ref();
 
+    const addressesList = inject('addressesList');
+
+
+    // Verify wether addressID ref has initial value.
     function isAddressID() {
         if (addressID.value) return true
         return false
@@ -16,6 +20,9 @@
         if (!isAddressID()) return
         const axios = attachJWTtoAxios();
         await axios.delete(`api/address/${addressID.value}`);
+
+        addressesList.delete(parseInt(addressID.value));
+        addressID.value = '';
     }
 
     onDelete = updateJWT(onDelete);

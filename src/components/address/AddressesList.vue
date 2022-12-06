@@ -1,5 +1,5 @@
 <script setup>
-    import { reactive, ref, onMounted } from 'vue';
+    import { onMounted, inject } from 'vue';
     import { jwtHelper } from '../../helpers';
     import SelectOption from '../UI/SelectOption.vue';
     import { Address } from '../../types'
@@ -9,13 +9,13 @@
     defineProps(['addressID']);
     defineEmits(['update:addressID']);
 
-    const selectOptions = reactive([]);
+    const selectOptions = inject('addressesList');
 
     // Push addresses into reactive array
-    function createAddresses(addresses, reactiveArr) {
+    function createAddresses(addresses, addressesMap) {
 
         return addresses.forEach(
-            address => {reactiveArr.push(new Address(address.address,address.id))}
+            address => {addressesMap.set(address.id ,new Address(address.address,address.id))}
         )
     }
 
@@ -43,7 +43,7 @@
     <div class="addresses-list">
         <SelectOption :modelValue="addressID"
         @update:modelValue="(addressID) => $emit('update:addressID', addressID)"
-        id="addresses" :select-options="selectOptions" select-name="selectedAddress"
+        id="addresses" :select-options="Array.from(selectOptions.values())" select-name="selectedAddress"
         select-hint="Выберите адрес"/>
     </div>
 </template>

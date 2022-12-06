@@ -1,14 +1,13 @@
 <script setup>
 import Intro from './components/Intro.vue'
-import AddressesTab from './components/address/AddressesTab.vue'
+import Content from './components/content.vue';
 import SignInUpVue from './components/sign-in-up/SignInUp.vue';
 import { updateJWT as updateDecorator, jwtHelper } from './helpers';
-import { provide, ref, onBeforeMount } from 'vue';
+import { provide, ref, onBeforeMount, reactive } from 'vue';
 
 const {extractUserIDfromJWT} = jwtHelper;
 
 const userID = ref('');
-
 
 // Provide props
 provide('userID', userID);
@@ -27,7 +26,7 @@ onBeforeMount(()=>updateJWT()
     <Intro />
     <div class="content">
         <SignInUpVue v-if="!userID"/>
-        <AddressesTab />
+        <Content v-else/>
     </div>
 </template>
 

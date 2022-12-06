@@ -1,17 +1,18 @@
 <script setup>
-    import {inject} from 'vue';
-
+    import {provide, reactive} from 'vue';
     import AddressDelete from './AddressDelete.vue';
     import AddressForm from './addressForm.vue';
 
-    const userID = inject('userID');
+    const addressesList = reactive(new Map());
+
+    provide('addressesList', addressesList);
 
 </script>
 
 <template>
 
-    <AddressForm v-if="userID"/>
-    <AddressDelete v-if="userID"/>
+    <AddressForm />
+    <AddressDelete />
 
 </template>
 
