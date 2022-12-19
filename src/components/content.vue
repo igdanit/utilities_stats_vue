@@ -7,30 +7,36 @@
     const boundedAccount = ref(false);
 
     function isHidden(event) {
-        for (let element of event.path) {
-            if (element.tagName === 'DIV') {
-                let className = element.className;
-                
-                switch(className) {
-                    case 'indications':
-                        indications.value = true;
-                        addresses.value = false;
-                        boundedAccount.value = false;
-                        break
+        let node = event.target;
+        let counter = -9;
+        while (node.tagName !== 'DIV' && counter !== 0) {
+            node = node.parentNode;
+            counter++;
+        }
 
-                    case 'addresses':
-                        addresses.value = true;
-                        indications.value = false;
-                        boundedAccount.value = false;
-                        break
-                            
-                    case 'bounded-accounts':
-                        boundedAccount.value = true;
-                        indications.value = false;
-                        addresses.value = false;
-                        break
-                }
-            }
+        if (node.tagName !== 'DIV') throw new Error("Can't reach DIV")
+
+
+        let className = node.className;
+        
+        switch(className) {
+            case 'indications':
+                indications.value = true;
+                addresses.value = false;
+                boundedAccount.value = false;
+                break
+
+            case 'addresses':
+                addresses.value = true;
+                indications.value = false;
+                boundedAccount.value = false;
+                break
+                    
+            case 'bounded-accounts':
+                boundedAccount.value = true;
+                indications.value = false;
+                addresses.value = false;
+                break
         }
     }
 

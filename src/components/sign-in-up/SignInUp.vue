@@ -1,27 +1,27 @@
 <script setup>
-    import { reactive } from 'vue';
+    import { reactive, ref } from 'vue';
     import SignUp from './SignUp.vue'
     import SignIn from './signIn.vue'
 
-    let hiddenStatuses = reactive({
-        'signIn': false,
-        'signUp': true,
-    });
+    let hiddenStatus = ref(true);
+
 
     function isHidden(event) {
-        for (let element of event.path) {
-            if (element.tagName === 'DIV') {
-                if (element.className.split('-')[1] === 'in') {
-                    hiddenStatuses.signIn = false;
-                    hiddenStatuses.signUp = true;
-                } else {
-                    hiddenStatuses.signIn = true;
-                    hiddenStatuses.signUp = false;
-                }
-                break
-            }
+        let node = event.target;
+        let counter = -9;
+        while (node.tagName !== 'DIV' && counter === 0) {
+            node = node.parentNode;
+            counter++;
         }
+
+        if (node.tagName !== 'DIV') throw new Error("Can't reach parent node")
+
+        let className = node.className.split('-')
+        if (className[1] === 'in') {
+            hiddenStatus.value = true;
+        } else if (className[1] === 'up') {hiddenStatus.value = false;}
     }
+
 </script>
 
 <template>
@@ -31,8 +31,8 @@
             <div class="sign-up-option"><p>Зарегистрироваться</p></div>
         </div>
         <div class="sign-in-up--content">
-            <SignIn :class="{hidden: hiddenStatuses.signIn}" />
-            <SignUp :class="{hidden: hiddenStatuses.signUp}" />
+            <SignIn v-if="hiddenStatus"/>
+            <SignUp v-else/>
         </div>
     </div>
 </template>
