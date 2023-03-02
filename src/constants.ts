@@ -1,5 +1,5 @@
-enum CONSTANTS {
-    ACCESS_TOKEN_NAME = 'access_token',
+enum TOKENS {
+    ACCESS_TOKEN = 'accessToken',
 }
 
-export default CONSTANTS;
+export default TOKENS;
