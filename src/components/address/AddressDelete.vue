@@ -1,7 +1,5 @@
 <script setup>
     import { ref, inject } from 'vue';
-    import { updateJWT } from '../../helpers';
-    import { attachJWTtoAxios } from '../../helpers/jwt';
     import SubmitButton from '../UI/SubmitButton.vue';
     import AddressesList from './AddressesList.vue';
 

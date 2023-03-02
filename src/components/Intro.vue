@@ -1,4 +1,4 @@
-<script>
+<script setup lang="ts">
 
 </script>
 
@@ -10,7 +10,7 @@
 
 <style>
     .intro {
-        margin: auto;
+        margin: 10px auto;
         width:100%;
         text-align: center;
     }

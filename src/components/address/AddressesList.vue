@@ -1,6 +1,5 @@
 <script setup>
     import { onMounted, inject } from 'vue';
-    import { jwtHelper } from '../../helpers';
     import SelectOption from '../UI/SelectOption.vue';
     import { Address } from '../../types'
 

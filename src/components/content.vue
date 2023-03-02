@@ -1,6 +1,7 @@
-<script setup>
+<script setup lang="ts">
     import { ref } from 'vue';
     import AddressesTab from './address/AddressesTab.vue';
+    import IndicationsTab from './indications/IndicationsTab.vue';
 
     const indications = ref(true);
     const addresses = ref(false);
@@ -51,6 +52,7 @@
         </div>
         <div class="main--content">
             <AddressesTab v-if="addresses" />
+            <IndicationsTab v-else-if="indications" /> 
         </div>
     </div>
 </template>

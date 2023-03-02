@@ -1,32 +1,68 @@
-<script setup>
-import Intro from './components/Intro.vue'
-import Content from './components/content.vue';
-import SignInUpVue from './components/sign-in-up/SignInUp.vue';
-import { updateJWT as updateDecorator, jwtHelper } from './helpers';
-import { provide, ref, onBeforeMount, reactive } from 'vue';
+<script setup lang="ts">
+    import { provide, ref, reactive, onBeforeMount, inject } from 'vue';
 
-const {extractUserIDfromJWT} = jwtHelper;
+    import Intro from './components/Intro.vue'
+    import Content from './components/content.vue';
+    import SignInUpVue from './components/sign-in-up/SignInUp.vue';
+    import Loading from './components/loading/Loading.vue';
+    import ErrorBlock from './components/UI/ErrorBlock.vue';
+    
+    import TOKENS from './constants';
+    import type { IAppError } from './types';
+    import { extractAccessToken } from './utils/tokens/jwt-localStorage';
+    import { updateStorage, updateAccessToken, JWT, type ITokenService } from './utils/tokens';
 
-const userID = ref('');
+    const userID = ref('');
+    const isLoading = ref(true);
+    // App level error. Appears in header.
+    const appError: IAppError = reactive({
+        msg: '',
+        visibility: false
+    })
 
-// Provide props
-provide('userID', userID);
+    const tokenService = inject('tokenService') as ITokenService;
 
-const updateJWT = updateDecorator();
+    // Provide props
+    provide('userID', userID);
+    provide('appError', appError);
 
-// NEED REFACTORING. MUST BE NOT ASYNCHRONOUS
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-onBeforeMount(()=>updateJWT()
-    .then((response)=> userID.value = extractUserIDfromJWT())
-    .catch((error)=> {if(error.response.status !== 401) throw error}));
-
+    // Trying to renew existing accessToken and stopping loading stub.
+    onBeforeMount(
+        async () => {
+            if (extractAccessToken() === null) return; // If token didn't save in localStorage
+            try {
+                const response = await updateAccessToken({value: extractAccessToken() as string}); // Token will renew if not expired.
+                let token: string;
+                if (response.ok) {
+                    token = (await response.json()).accessToken;
+                    if (token === undefined) throw new Error("Property 'accessToken' doesn't exist on response body!")
+                    updateStorage(TOKENS.ACCESS_TOKEN, token); // Backup in window.localStorage
+                    const jwt = new JWT(token);
+                    tokenService.setToken(TOKENS.ACCESS_TOKEN, jwt);
+                    jwt.payload.sub
+                    const sub = jwt.payload.sub;
+                    if (typeof sub !== "number") {
+                        throw new Error(`Incorrect value for property 'sub' in accessToken. Type of sub should be "number", not ${typeof sub}`)
+                    }
+                    userID.value = sub.toString();
+                }
+            } catch(e) {
+                console.error(e)
+            }
+            isLoading.value = false;
+        }
+    )
 </script>
 
 <template>
-    <Intro />
-    <div class="content">
-        <SignInUpVue v-if="!userID"/>
-        <Content v-else/>
+    <ErrorBlock v-if="appError.visibility"/>
+    <Loading v-if="isLoading"/>
+    <div class="content" v-else>
+        <Intro/>
+        <div class="block">
+            <SignInUpVue v-if="!userID"/>
+            <Content v-else/>
+        </div>
     </div>
 </template>
 
@@ -40,23 +76,36 @@ onBeforeMount(()=>updateJWT()
     --clr-input: hsl(110 100% 50%)
 }
 
+*,
+*::before,
+*::after { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
 body {
     background: var(--clr-bg);
 }
 
-#app {
+.content {
     width: 992px;
     margin: 2% auto;
-    color: var(--clr-text);
-    text-decoration: none;
     border: var(--clr-neon) 0.25em solid;
-    font-size: 1.3rem;
-    
     box-shadow: inset 0 0 1em 0 var(--clr-neon), 0 0 1em 0 var(--clr-neon);
 }
 
-#app * {
+.block {
+    margin: 2%;
+    border: var(--clr-border) 0.25em solid;
+    box-shadow: inset 0 0 0.7em 0 var(--clr-border), 0 0 0.7em 0 var(--clr-border);
+}
+
+#app {
     font-family: 'Lobster';
+    color: var(--clr-text);
+    text-decoration: none;
+    font-size: 1.3rem;
 }
 
 @media (max-width: 992px) {
@@ -71,10 +120,21 @@ body {
     box-shadow: 0 0 1em 0 var(--clr-neon);
 }
 
+.neon-text {
+    text-shadow:
+    0 0 7px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa;
+}
 
-.content {
-    margin: 2% auto;
-    border: var(--clr-border) 0.25em solid;
-    width: 90%;
+.neon-text-hover {
+    transition: text-shadow 0.3s;
+}
+
+.neon-text-hover:hover {
+    text-shadow:
+    0 0 7px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa;
 }
 </style>

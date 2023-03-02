@@ -3,7 +3,6 @@
     import axios from 'axios';
     import FieldInput from '../UI/FieldInput.vue';
     import SubmitButton from '../UI/SubmitButton.vue';
-    import { reactiveToPlain } from '../../helper';
 
     const address = ref('');
 

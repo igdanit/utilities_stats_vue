@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 </script>
 
 <template>
-    <button class="btn">
+    <button class="btn btn-neon">
         <slot></slot>
     </button>
 </template>
@@ -20,5 +20,16 @@
         border-radius: 10%;
         border: var(--clr-btn) 0.15em solid;
         box-shadow: 0 0 1em 0 var(--clr-btn);
+    }
+
+    .btn-neon {
+        transition: text-shadow 0.2s;
+    }
+
+    .btn-neon:hover {
+        text-shadow:
+        0 0 28px var(--clr-btn),
+        0 0 42px#d4ac0d,
+        0 0 82px#d4ac0d;
     }
 </style>
