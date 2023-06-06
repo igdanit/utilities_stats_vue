@@ -67,9 +67,9 @@
 <template>
     <div class="sign-in">
         <form @submit.prevent="onSubmit">
-            <FieldInput v-model="email" name="email" type="email" placeholder="Введите email" />
-            <FieldInput v-model="password.data.value" name="password" type="password" placeholder="Введите пароль" />
-            <SubmitButton type="submit">Войти</SubmitButton>
+            <FieldInput v-model="email" class="margin-10 w-95" name="email" type="email" placeholder="Введите email" />
+            <FieldInput v-model="password.data.value" class="margin-10 w-95" name="password" type="password" placeholder="Введите пароль" />
+            <SubmitButton type="submit" class="margin-10">Войти</SubmitButton>
         </form>
     </div>
 </template>

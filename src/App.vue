@@ -2,7 +2,7 @@
     import { provide, ref, reactive, onBeforeMount, inject } from 'vue';
 
     import Intro from './components/Intro.vue'
-    import Content from './components/content.vue';
+    import Content from './components/Content.vue';
     import SignInUpVue from './components/sign-in-up/SignInUp.vue';
     import Loading from './components/loading/Loading.vue';
     import ErrorBlock from './components/UI/ErrorBlock.vue';
@@ -29,7 +29,10 @@
     // Trying to renew existing accessToken and stopping loading stub.
     onBeforeMount(
         async () => {
-            if (extractAccessToken() === null) return; // If token didn't save in localStorage
+            if (extractAccessToken() === null) { // If token didn't save in localStorage
+                isLoading.value=false; 
+                return; 
+            }
             try {
                 const response = await updateAccessToken({value: extractAccessToken() as string}); // Token will renew if not expired.
                 let token: string;
@@ -116,8 +119,12 @@ body {
 
 .input {
     background-color: transparent;
-    border: var(--clr-input) 0.1em solid;
-    box-shadow: 0 0 1em 0 var(--clr-neon);
+    border: var(--clr-input) 0.1rem solid;
+    box-shadow: 0 0 1rem 0 var(--clr-neon);
+}
+
+.input:focus {
+    outline: none;
 }
 
 .neon-text {
@@ -137,4 +144,33 @@ body {
     0 0 42px #0fa,
     0 0 82px #0fa;
 }
+
+.border-green {
+    border: var(--clr-input) 0.1rem solid;
+    box-shadow: 0 0 1rem 0 var(--clr-neon);
+}
+
+.margin-10 {
+    margin: 10px;
+}
+
+.w-95 {
+    width: 95%;
+}
+
+.side-margin-10 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.select-list {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: var(--clr-text);
+    overflow: hidden;
+    border: 0px;
+    text-indent: 0.2rem;
+}
+
 </style>

@@ -1,5 +1,5 @@
 export class Singleton {
-    private static _instance: any;
+    protected static _instance: any;
 
     protected constructor(...args: any[]) {}
 
@@ -7,5 +7,6 @@ export class Singleton {
         if (this._instance === undefined) {
             this._instance = new this(...args);
         }
+        return this._instance;
     }
 }

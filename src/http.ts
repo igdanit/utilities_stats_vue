@@ -7,8 +7,8 @@ export async function retryFetch(retryCount: number, ...fetchParams: Parameters<
     let response = await fetch(...fetchParams);
     retryCount = retryCount <= 1 ? 0: retryCount-1;
     for (let i = 0; i < retryCount; ++i) {
-        response = await fetch(...fetchParams);
         if (response.ok) break // Redirect ????
+        response = await fetch(...fetchParams);
     }
     return response
 }

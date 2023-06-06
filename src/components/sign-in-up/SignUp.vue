@@ -78,11 +78,11 @@
 <template>
     <div class=sign-up>
         <form @submit.prevent="onSubmit">
-            <FieldInput v-model="username" name="username" type="text" placeholder="Введите имя пользователя" />
-            <FieldInput v-model="email" name="email" type="email" placeholder="Введите email" /> 
-            <FieldInput v-model="password" name="password" type="password" placeholder="Введите пароль" />
-            <FieldInput v-model="repeatedPassword" name="repeated-password" type="password" placeholder="Повторно введите пароль " />
-            <SubmitButton type="submit">Зарегистрироваться</SubmitButton>
+            <FieldInput v-model="username" class="margin-10 w-95" name="username" type="text" placeholder="Введите имя пользователя" />
+            <FieldInput v-model="email" class="margin-10 w-95" name="email" type="email" placeholder="Введите email" /> 
+            <FieldInput v-model="password" class="margin-10 w-95" name="password" type="password" placeholder="Введите пароль" />
+            <FieldInput v-model="repeatedPassword" class="margin-10 w-95" name="repeated-password" type="password" placeholder="Повторно введите пароль " />
+            <SubmitButton type="submit" class="margin-10">Зарегистрироваться</SubmitButton>
         </form>
     </div>
 </template>

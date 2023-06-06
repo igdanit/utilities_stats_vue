@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 
 defineProps(['modelValue'])
 defineEmits(['update:modelValue'])
@@ -6,16 +6,14 @@ defineEmits(['update:modelValue'])
 </script>
 
 <template>
-    <input class="input" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+    <input class="input" :value="modelValue" @input="$event => $emit('update:modelValue', $event.target.value)">
 </template>
 
 <style>
     .input {
-        margin: 10px;
         box-sizing: border-box;
-        width: 95%;
-        color: white;
-        text-indent: 0.4rem;
+        color: var(--clr-text);
+        text-indent: 0.5rem;
         height: 2rem;
     }
 

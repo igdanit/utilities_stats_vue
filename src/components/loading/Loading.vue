@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="loading">LOADING...</div>
+    <div class="loading neon-text-hover">LOADING...</div>
 </template>
 
 <style>

@@ -1,55 +1,58 @@
-interface IAddress {
+export interface IAddress {
+    id: number,
     address: string,
-    id: number
+    userID: number
 }
 
-interface ISelect {
-    data: string,
-    id: number
-}
+export type AddressID = string;
 
-interface IAddresseList {
+// interface ISelect {
+//     data: string,
+//     id: number
+// }
 
-    delete(id: number): void;
+// interface IAddresseList {
 
-    push(address: IAddress): void;
-}
+//     delete(id: number): void;
 
-export class Address implements ISelect, IAddress {
-    constructor(public address: string, public readonly id: number) {}
+//     push(address: IAddress): void;
+// }
 
-    get data() {
-        return this.address
-    }
+// export class Address implements ISelect, IAddress {
+//     constructor(public address: string, public readonly id: number, readonly userID: number) {}
 
-    set data(newAddress: string) {
-        this.address = newAddress;
-    }
-}
+//     get data() {
+//         return this.address
+//     }
 
-export class AddressesList implements IAddresseList{
+//     set data(newAddress: string) {
+//         this.address = newAddress;
+//     }
+// }
 
-    public addressList: Map<number, Address>;
+// export class AddressesList implements IAddresseList{
 
-    constructor() {
-        this.addressList = new Map();
-    }
+//     public addressList: Map<number, Address>;
 
-    delete(id: number): void {
-        if (this.addressList.size === 0) throw new Error(`${this} doesn't have any value`);
-        if (!this.addressList.delete(id)) throw new Error(`${id} key-value pair doesn't exist`);
-    }
+//     constructor() {
+//         this.addressList = new Map();
+//     }
 
-    push(address: Address) {
-        this.addressList.set(address.id, address);
-    }
+//     delete(id: number): void {
+//         if (this.addressList.size === 0) throw new Error(`${this} doesn't have any value`);
+//         if (!this.addressList.delete(id)) throw new Error(`${id} key-value pair doesn't exist`);
+//     }
 
-    values() {
-        return this.addressList.values()
-    }
+//     push(address: Address) {
+//         this.addressList.set(address.id, address);
+//     }
+
+//     values() {
+//         return this.addressList.values()
+//     }
 
 
-    get [Symbol.toStringTag]() {
-        return 'AddressesList'
-    }
-}
+//     get [Symbol.toStringTag]() {
+//         return 'AddressesList'
+//     }
+// }

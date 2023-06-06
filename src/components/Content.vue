@@ -1,42 +1,25 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { ref, reactive, provide } from 'vue';
     import AddressesTab from './address/AddressesTab.vue';
-    import IndicationsTab from './indications/IndicationsTab.vue';
+    import IndicationTab from './indications/IndicationTab.vue';
 
     const indications = ref(true);
     const addresses = ref(false);
-    const boundedAccount = ref(false);
 
-    function isHidden(event) {
-        let node = event.target;
-        let counter = -9;
-        while (node.tagName !== 'DIV' && counter !== 0) {
-            node = node.parentNode;
-            counter++;
-        }
-
-        if (node.tagName !== 'DIV') throw new Error("Can't reach DIV")
-
-
-        let className = node.className;
+    function isHidden(event: Event) {
+        let node = (event.target as HTMLElement).closest('div');
+        if (node == null) return;
+        let className = node.classList[0]; // get first class from classes
         
         switch(className) {
             case 'indications':
                 indications.value = true;
                 addresses.value = false;
-                boundedAccount.value = false;
                 break
 
             case 'addresses':
                 addresses.value = true;
                 indications.value = false;
-                boundedAccount.value = false;
-                break
-                    
-            case 'bounded-accounts':
-                boundedAccount.value = true;
-                indications.value = false;
-                addresses.value = false;
                 break
         }
     }
@@ -46,18 +29,21 @@
 <template>
     <div class="main">
         <div @click="isHidden" class="main--tabs">
-            <div class="indications"><p>Показания</p></div>
-            <div class="addresses"><p>Адреса</p></div>
-            <div class="bounded-accounts"><p>Связанные аккаунты</p></div>
+            <div class="indications neon-text-hover" :class="{'neon-text':indications}"><p>Показания</p></div>
+            <div class="addresses neon-text-hover" :class="{'neon-text':addresses}"><p>Адреса</p></div>
         </div>
         <div class="main--content">
             <AddressesTab v-if="addresses" />
-            <IndicationsTab v-else-if="indications" /> 
+            <IndicationTab v-else-if="indications" /> 
         </div>
     </div>
 </template>
 
 <style>
+
+    .main--content {
+        padding: 0.6rem 0;
+    }
 
     .main form {
         display: flex;
@@ -69,6 +55,9 @@
         display: flex;
     }
 
+    .main--tabs p {
+        margin: 10px;
+    }
 
     .main--tabs > div{
         flex: 1;
@@ -76,6 +65,7 @@
         text-align: center;
         border: var(--clr-border) solid;
         border-width: 0 0.125em 0.25em 0.125em;
+        box-shadow: inset 0 0 0.7em 0 var(--clr-border), 0 0 0.7em 0 var(--clr-border);
     }
 
     .main--tabs > div:first-child {
@@ -85,5 +75,5 @@
     .main--tabs > div:last-child {
         border-width: 0 0 0.25em 0.125em;
     }
-
+    
 </style>
