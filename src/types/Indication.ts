@@ -5,10 +5,12 @@ export interface Indication {
   indication: number;
   indicationTypeID: string;
   createdAt: IDate | undefined;
+  userID: string;
 }
 
 export interface IndicationType {
   id: string;
   addressID: number;
   type: string;
+  userID: string;
 }

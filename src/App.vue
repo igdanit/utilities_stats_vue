@@ -29,7 +29,7 @@
     // Trying to renew existing accessToken and stopping loading stub.
     onBeforeMount(
         async () => {
-            if (extractAccessToken() === null) { // If token didn't save in localStorage
+            if (extractAccessToken() === null) { // If token don't saved in localStorage
                 isLoading.value=false; 
                 return; 
             }
@@ -156,6 +156,14 @@ body {
 
 .w-95 {
     width: 95%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
 }
 
 .side-margin-10 {

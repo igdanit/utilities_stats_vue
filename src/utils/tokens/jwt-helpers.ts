@@ -27,8 +27,8 @@ export async function updateAccessToken(token: IToken, retryCount: number = 3): 
  * Will update accessToken, if token exist, and send request concurrently.
  */
 export function attachUpdateAccessToken(tokenService: ITokenService, tokenName: TokenID, retryCount: number = 3) {
-    return function (func: Function) {
-        return async function(...args: any[]) {
+    return function (func: Function) { // func is request function
+        return async function(...args: any[]) { // args is request function args
             const token = tokenService.getToken(tokenName);
             if (token !== null) {
                 updateAccessToken(token, retryCount) // Don't await. Make execution ahead
@@ -43,6 +43,6 @@ export function attachUpdateAccessToken(tokenService: ITokenService, tokenName: 
 
 export async function isAccessTokenValid(token: IToken) {
     const response = await updateAccessToken(token);
-    if (response.status === 401) return false;
-    return true;
+    if (response.status === 400) return true;
+    return false;
 }

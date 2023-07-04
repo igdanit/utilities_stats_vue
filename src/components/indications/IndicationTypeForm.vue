@@ -27,7 +27,11 @@ import type { ITokenService } from '../../utils/tokens';
                 Authorization: createBearerToken(tokenService.getToken(TOKENS.ACCESS_TOKEN)?.value || "")
             }
         });
-        console.log(response)
+
+        switch (response.status) {
+            case (400):
+                break;
+        }
     }
 
 

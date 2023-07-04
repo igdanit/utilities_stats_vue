@@ -12,6 +12,7 @@
 
     const addrID = ref<string>('');
 
+
     const appError = inject('appError') as IAppError; // Provided from App.vue
     const tokenService = inject('tokenService') as ITokenService; // Provided from main.js
     const addrsList = inject('addressesList') as IAddress[]; // Provided from AddressesTab.vue
@@ -23,10 +24,10 @@
         return false
     }
 
-    async function deleteAddress(addrID: string) {
+    async function deleteAddress(addressID: string) {
         return await retryFetch(
             3,
-            `api/v1/address/${addrID.value}`, // If you're have an error by IDE, don't edit it!
+            `api/v1/address/${addressID}`, // If you're have an error by IDE, don't edit it!
             {
                 method: "DELETE",
                 headers: {
@@ -39,7 +40,7 @@
     async function onDelete(event: Event) {
         if (!isAddrID()) return;
 
-        const res = await attachUpdateAccessToken(tokenService, TOKENS.ACCESS_TOKEN)(deleteAddress)(addrID);
+        const res = await attachUpdateAccessToken(tokenService, TOKENS.ACCESS_TOKEN)(deleteAddress)(addrID.value);
         if (!res.ok) {
             appError.msg = 'Не удалось удалить адрес. Попробуйте снова';
             appError.visibility = true;

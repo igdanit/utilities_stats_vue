@@ -65,6 +65,7 @@
     
     .drop-down--content {
         position: relative;
+        display: none;
         height: 0;
         transition: 0.5s ease;
         box-shadow: 0 0 1em 0 var(--clr-btn);
